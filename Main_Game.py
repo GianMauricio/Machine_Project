@@ -5,6 +5,15 @@ import pygame as pyg
 import math
 import random
 
+background_1 = pygame.image.load("Background 1.png")
+background_2 = pygame.image.load("Background 2.png")
+building_1 = pygame.image.load("Building 1.png")
+building_2 = pygame.image.load("Bulding 2.png")
+building_3 = pygame.image.load("Building 3.png")
+
+
+
+
 # Section 1 :: Initialize literally everything
 pyg.init()
 pyg.display.init()
