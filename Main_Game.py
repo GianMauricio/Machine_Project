@@ -10,6 +10,10 @@ background_2 = pygame.image.load("Background 2.png")
 building_1 = pygame.image.load("Building 1.png")
 building_2 = pygame.image.load("Bulding 2.png")
 building_3 = pygame.image.load("Building 3.png")
+player_sprt = pygame.image.load("Player Sprite00.png")
+npc_sprt01 = pygame.image.load("IECMPTK NPC 100.png")
+npc_sprt02 = pygame.image.load("IECMPTK NPC 200.png")
+npc_sprt03 = pygame.image.load("IECMPTK NPC 300.png")
 
 
 
