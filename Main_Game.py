@@ -3,26 +3,48 @@
 # Section 0 :: Import necessary modules
 import pygame as pyg
 import math
-import random
+
 
 # Section 1 :: Initialize literally everything
 pyg.init()
 pyg.display.init()
 width = 1280
-height = 720
+height = 695
 screen = pyg.display.set_mode((width, height))
 
+# These are the backgrounds
+bg_1 = pyg.image.load("Resources/Assets/Background_1.png")
+bg_2 = pyg.image.load("Resources/Assets/Background_2.png")
+build_1 = pyg.image.load("Resources/Assets/Building_1.png")
+build_2 = pyg.image.load("Resources/Assets/Building_2.png")
+build_3 = pyg.image.load("Resources/Assets/Building_3.png")
+
+# These are the character sprites
+player_front_idle = pyg.image.load("Resources/Player/Player_Sprite00.png")
+player_left_idle = pyg.image.load("Resources/Player/Player_Sprite12.png")
+player_right_idle = pyg.image.load("Resources/Player/Player_Sprite04.png")
+player = player_front_idle
+
+'''
+# These are the NPC's
+npc_1 = pyg.image.load("Resources/NPC_1/1")
+npc_2 = pyg.image.load("Resources/NPC_2/1")
+npc_3 = pyg.image.load("Resources/NPC_3/1")
+'''
+
+# Basic control array for later
 keys = [False, False, False, False]
 player_pos = [100, 100]
 
 # Section 2 :: Create the screen and the world in which the player will traverse
 running = True
 while running:
-    # Section 3 :: Spawn essentials (Player, NPC's, etc.)
-    for x_point in range(math.floor((width / grass.get_width())) + 1):
-        for y_point in range(math.floor((height / grass.get_height())) + 1):
-            screen.blit(grass, (x_point * 100, y_point * 100))
-
+    # Screen Clear
+    screen.fill(0)
+    # Section 3 :: Display background
+    for x_point in range(math.floor((width / bg_1.get_width())) + 1):
+        for y_point in range(math.floor((height / bg_1.get_height())) + 1):
+            screen.blit(bg_1, (x_point * 100, y_point * 100))
 
     # Shifts the rotation and position of the player:
     # Takes the current location of the mouse
@@ -85,7 +107,7 @@ while running:
     if keys[3]:
         player_pos[0] += 5
 
-    for event in pyg.event.get():
-        if event.type == pyg.QUIT:
-            running = False
-        # Section 6 :: Design update structure for screen
+for event in pyg.event.get():
+    if event.type == pyg.QUIT:
+        running = False
+    # Section 6 :: Design update structure for screen
