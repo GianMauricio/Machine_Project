@@ -5,17 +5,6 @@ import pygame as pyg
 import math
 
 
-background_1 = pygame.image.load("Background 1.png")
-background_2 = pygame.image.load("Background 2.png")
-building_1 = pygame.image.load("Building 1.png")
-building_2 = pygame.image.load("Bulding 2.png")
-building_3 = pygame.image.load("Building 3.png")
-player_sprt = pygame.image.load("Player Sprite00.png")
-npc_sprt01 = pygame.image.load("IECMPTK NPC 100.png")
-npc_sprt02 = pygame.image.load("IECMPTK NPC 200.png")
-npc_sprt03 = pygame.image.load("IECMPTK NPC 300.png")
-
-
 # Section 1 :: Initialize literally everything
 pyg.init()
 pyg.display.init()
@@ -34,14 +23,14 @@ build_3 = pyg.image.load("Resources/Assets/Building_3.png")
 player_front_idle = pyg.image.load("Resources/Player/Player_Sprite00.png")
 player_left_idle = pyg.image.load("Resources/Player/Player_Sprite12.png")
 player_right_idle = pyg.image.load("Resources/Player/Player_Sprite04.png")
+player_back_idle = pyg.image.load("Resources/Player/Player_Sprite10.png")
 player = player_front_idle
 
-'''
 # These are the NPC's
-npc_1 = pyg.image.load("Resources/NPC_1/1")
-npc_2 = pyg.image.load("Resources/NPC_2/1")
-npc_3 = pyg.image.load("Resources/NPC_3/1")
-'''
+npc_1 = pyg.image.load("Resources/NPC_1/1.png")
+npc_2 = pyg.image.load("Resources/NPC_2/1.png")
+npc_3 = pyg.image.load("Resources/NPC_3/1.png")
+
 
 # Basic control array for later
 keys = [False, False, False, False]
@@ -57,18 +46,7 @@ while running:
         for y_point in range(math.floor((height / bg_1.get_height())) + 1):
             screen.blit(bg_1, (x_point * 100, y_point * 100))
 
-    # Shifts the rotation and position of the player:
-    # Takes the current location of the mouse
-    position = pyg.mouse.get_pos()
-    # Sets the angle of rotation (In radians)
-    angle = math.atan2(position[1] - (player_pos[1] + 32), position[0] - (player_pos[0] + 26))
-    # Sets the actual rotation of the player (In degrees)
-    player_rot = pyg.transform.rotate(player, 360 - angle * 57.29)
-    # Calculate new position to compensate for rotation
-    player_pos1 = (player_pos[0] - player_rot.get_rect().width / 2, player_pos[1] - player_rot.get_rect().height / 2)
-    # Draw player
-    screen.blit(player_rot, player_pos1)
-
+    screen.blit(player, player_pos)
     pyg.display.flip()
 
     # Section 4 :: Create game loop for beginning and ending
@@ -81,6 +59,7 @@ while running:
         if event.type == pyg.KEYDOWN:
             # Key W
             if event.key == pyg.K_w:
+
                 keys[0] = True
             # Key A
             elif event.key == pyg.K_a:
@@ -111,14 +90,21 @@ while running:
     if keys[0]:
         # Move player up
         player_pos[1] -= 5
+        player = player_back_idle
     if keys[2]:
+        # Moves player down
         player_pos[1] += 5
+        player = player_front_idle
     if keys[1]:
+        # Moves player left
         player_pos[0] -= 5
+        player = player_left_idle
     if keys[3]:
+        # Moves player right
         player_pos[0] += 5
+        player = player_right_idle
 
-for event in pyg.event.get():
-    if event.type == pyg.QUIT:
-        running = False
-    # Section 6 :: Design update structure for screen
+    for event in pyg.event.get():
+        if event.type == pyg.QUIT:
+            running = False
+        # Section 6 :: Design update structure for screen
