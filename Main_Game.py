@@ -2,8 +2,6 @@
 
 # Section 0 :: Import necessary modules
 import pygame as pyg
-import math
-
 
 # Section 1 :: Initialize literally everything
 pyg.init()
@@ -34,32 +32,36 @@ npc_3 = pyg.image.load("Resources/NPC_3/1.png")
 
 # Basic control array for later
 keys = [False, False, False, False]
-player_pos = [100, 100]
+player_pos = [300, 300]
+player_collision = False
 
 # Section 2 :: Create the screen and the world in which the player will traverse
 running = True
 while running:
+    player_collision = False
     # Screen Clear
     screen.fill(0)
     # Section 3 :: Display background
-    for x_point in range(math.floor((width / bg_1.get_width())) + 1):
-        for y_point in range(math.floor((height / bg_1.get_height())) + 1):
-            screen.blit(bg_1, (x_point * 100, y_point * 100))
-
+    screen.blit(bg_1, (0, 0))
+    screen.blit(build_1, (0, 0))
+    screen.blit(build_2, (500, 0))
+    screen.blit(build_3, (850, 0))
     screen.blit(player, player_pos)
     pyg.display.flip()
 
+    player_rect = pyg.Rect(player.get_rect())
+    building_1_rect = pyg.Rect(build_1.get_rect())
+    building_2_rect = pyg.Rect(build_2.get_rect())
+    building_3_rect = pyg.Rect(build_3.get_rect())
     # Section 4 :: Create game loop for beginning and ending
     # Loops through the current list of events (Event Handling)
     for event in pyg.event.get():
-
         # Control structure for movement:
         # If player presses a key
         # Section 5 :: Design control structure for player
         if event.type == pyg.KEYDOWN:
             # Key W
             if event.key == pyg.K_w:
-
                 keys[0] = True
             # Key A
             elif event.key == pyg.K_a:
@@ -106,5 +108,5 @@ while running:
 
     for event in pyg.event.get():
         if event.type == pyg.QUIT:
-            running = False
+            pyg.quit()
         # Section 6 :: Design update structure for screen
