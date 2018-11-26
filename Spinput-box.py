@@ -41,6 +41,7 @@ class InputBox:
                 elif event.key == pyg.K_BACKSPACE:
                     self.text = self.text[:-1]
                 else:
+                   if len(str(self.text)) < 1:
                     self.text += event.unicode
                 # Re-render the text.
                 self.txt_surface = FONT.render(self.text, True, self.color)
@@ -49,7 +50,7 @@ class InputBox:
         # Resize the box if the text is too long.
         width = max(22, 22)
         self.rect.w = width
-        
+
 
     def draw(self, screen):
         # Blit the text.
@@ -63,7 +64,9 @@ def main():
     clock = pyg.time.Clock()
     input_box1 = InputBox(100, 100, 140, 32)
     input_box2 = InputBox(125, 100, 140, 32)
-    input_boxes = [input_box1, input_box2]
+    input_box3 = InputBox(150, 100, 140, 32)
+    input_box4 = InputBox(175, 100, 140, 32)
+    input_boxes = [input_box1, input_box2, input_box3, input_box4]
     done = False
 
     while not done:
