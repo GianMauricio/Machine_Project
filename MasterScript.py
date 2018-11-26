@@ -4,6 +4,7 @@
 import pygame as pyg
 from random import randint as rin
 import Verification
+from SpinPutBox import *
 
 pyg.init()
 pyg.display.init()
@@ -22,12 +23,86 @@ true_ans = r1 * r2
 print(r1, "*", r2, "=", true_ans)
 user_input = true_ans
 while instance == 0:
+    screen.fill(0)
+    main_problem_string = "Main problem: {} * {} = ".format(r1, r2)
+
+    render_main_problem = number_font.render(main_problem_string, True, (255, 255, 255))
+    main_problem_Rect = screen.get_rect()
+    main_problem_Rect.centerx = main_problem_Rect.centerx + 50
+    main_problem_Rect.centery = main_problem_Rect.centery + 50
+
+    screen.blit(render_main_problem, main_problem_Rect)
 
     if true_ans >= 1000:
         print("Now spawning 4 boxes")
 
+        input_box1 = InputBox(main_problem_Rect.centerx - 450, main_problem_Rect.centery - 360, 140, 32)
+        input_box2 = InputBox(main_problem_Rect.centerx - 425, main_problem_Rect.centery - 360, 140, 32)
+        input_box3 = InputBox(main_problem_Rect.centerx - 400, main_problem_Rect.centery - 360, 140, 32)
+        input_box4 = InputBox(main_problem_Rect.centerx - 375, main_problem_Rect.centery - 360, 140, 32)
+        input_boxes = [input_box1, input_box2, input_box3, input_box4]
+        done = False
+
+        while not done:
+            screen.fill(0)
+            main_problem_string = "Main problem: {} * {} = ".format(r1, r2)
+
+            render_main_problem = number_font.render(main_problem_string, True, (255, 255, 255))
+            main_problem_Rect = screen.get_rect()
+            main_problem_Rect.centerx = main_problem_Rect.centerx + 50
+            main_problem_Rect.centery = main_problem_Rect.centery + 50
+
+            screen.blit(render_main_problem, main_problem_Rect)
+
+            for box in input_boxes:
+                box.update()
+
+            for box in input_boxes:
+                box.draw(screen)
+
+            pyg.display.flip()
+
+            for event in pyg.event.get():
+                if event.type == pyg.QUIT:
+                    done = True
+
+                for box in input_boxes:
+                    box.handle_event(event)
+
     else:
         print("Now spawning 3 boxes")
+
+        input_box1 = InputBox(main_problem_Rect.centerx - 450, main_problem_Rect.centery - 360, 140, 32)
+        input_box2 = InputBox(main_problem_Rect.centerx - 425, main_problem_Rect.centery - 360, 140, 32)
+        input_box3 = InputBox(main_problem_Rect.centerx - 400, main_problem_Rect.centery - 360, 140, 32)
+        input_boxes = [input_box1, input_box2, input_box3]
+        done = False
+
+        while not done:
+            screen.fill(0)
+            main_problem_string = "Main problem: {} * {} = ".format(r1, r2)
+
+            render_main_problem = number_font.render(main_problem_string, True, (255, 255, 255))
+            main_problem_Rect = screen.get_rect()
+            main_problem_Rect.centerx = main_problem_Rect.centerx + 50
+            main_problem_Rect.centery = main_problem_Rect.centery + 50
+
+            screen.blit(render_main_problem, main_problem_Rect)
+
+            for box in input_boxes:
+                box.update()
+
+            for box in input_boxes:
+                box.draw(screen)
+
+            pyg.display.flip()
+
+            for event in pyg.event.get():
+                if event.type == pyg.QUIT:
+                    done = True
+
+                for box in input_boxes:
+                    box.handle_event(event)
 
     user_input = true_ans
 
