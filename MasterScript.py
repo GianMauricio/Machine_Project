@@ -36,10 +36,10 @@ while instance == 0:
     if true_ans >= 1000:
         print("Now spawning 4 boxes")
 
-        input_box1 = InputBox(main_problem_Rect.centerx - 450, main_problem_Rect.centery - 360, 140, 32)
-        input_box2 = InputBox(main_problem_Rect.centerx - 425, main_problem_Rect.centery - 360, 140, 32)
-        input_box3 = InputBox(main_problem_Rect.centerx - 400, main_problem_Rect.centery - 360, 140, 32)
-        input_box4 = InputBox(main_problem_Rect.centerx - 375, main_problem_Rect.centery - 360, 140, 32)
+        input_box1 = InputBox(main_problem_Rect.centerx - 450, main_problem_Rect.centery - 360, 140, 32, 0)
+        input_box2 = InputBox(main_problem_Rect.centerx - 425, main_problem_Rect.centery - 360, 140, 32, 1)
+        input_box3 = InputBox(main_problem_Rect.centerx - 400, main_problem_Rect.centery - 360, 140, 32, 2)
+        input_box4 = InputBox(main_problem_Rect.centerx - 375, main_problem_Rect.centery - 360, 140, 32, 3)
         input_boxes = [input_box1, input_box2, input_box3, input_box4]
         done = False
 

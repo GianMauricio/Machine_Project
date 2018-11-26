@@ -1,7 +1,8 @@
 import pygame as pyg
-# box for inputting
+import BoxerUnboxer as BU
+# Box for inputting
 
-spinputbox = pyg.image.load("Resources/Assets/box_center.png")
+spin_put_box = pyg.image.load("Resources/Assets/box_center.png")
 
 # Spawning the box
 
@@ -16,12 +17,13 @@ FONT = pyg.font.Font(None, 32)
 
 class InputBox:
 
-    def __init__(self, x, y, w, h, text=''):
+    def __init__(self, x, y, w, h, place, text=''):
         self.rect = pyg.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
         self.text = text
         self.txt_surface = FONT.render(text, True, self.color)
         self.active = False
+        self.place = place
 
     def handle_event(self, event):
         if event.type == pyg.MOUSEBUTTONDOWN:
@@ -38,7 +40,7 @@ class InputBox:
 
             if self.active:
                 if event.key == pyg.K_RETURN:
-                    print(self.text)
+                    BU.boxer(self.text, self.place)
                     self.text = ''
 
                 elif event.key == pyg.K_BACKSPACE:
