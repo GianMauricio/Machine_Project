@@ -3,6 +3,7 @@
 
 import pygame as pyg
 from random import randint as rin
+import Verification
 
 pyg.init()
 pyg.display.init()
@@ -11,7 +12,7 @@ height = 695
 screen = pyg.display.set_mode((width, height))
 
 number_font = pyg.font.Font(None, 24)
-running = True
+instance = 0
 
 r2 = rin(10, 99)
 r1 = rin(10, 99)
@@ -19,65 +20,120 @@ r1 = rin(10, 99)
 true_ans = r1 * r2
 
 print(r1, "*", r2, "=", true_ans)
+user_input = true_ans
+while instance == 0:
 
-if true_ans >= 1000:
-    print("Now spawning 4 boxes")
+    if true_ans >= 1000:
+        print("Now spawning 4 boxes")
 
-else:
-    print("Now spawning 3 boxes")
+    else:
+        print("Now spawning 3 boxes")
 
-"Begin the LOIF part of the script"
+    user_input = true_ans
 
+    progress = Verification.verification(user_input, true_ans)
+
+    if progress:
+        instance = 0
+    else:
+        instance = 1
+
+
+# Begin the LOIF part of the script
 
 # L
 def begin_l(integer_1, integer_2):
-    last_digit_1 = integer_1 % 10
-    last_digit_2 = integer_2 % 10
-    ans = last_digit_1 * last_digit_2
+    while 1:
+        last_digit_1 = integer_1 % 10
+        last_digit_2 = integer_2 % 10
+        ans = last_digit_1 * last_digit_2
 
-    l_string = number_font.render("L problem: {} * {} = {} ".format(last_digit_1, last_digit_2, ans)
-                                  , True, (255, 192, 203))
+        l_string = number_font.render("L problem: {} * {} = {} ".format(last_digit_1, last_digit_2, ans),
+                                      True, (255, 192, 203))
 
-    return l_string
+        if ans >= 10:
+            print("Now spawning 2 boxes")
+        else:
+            print("Now spawning one box")
+
+        u_input = ans
+
+        correctness = Verification.verification(u_input, ans)
+
+        if correctness:
+            return l_string
 
 
 # O
 def begin_2(integer_1, integer_2):
-    first_digit_1 = int(integer_1/10)
-    last_digit_2 = integer_2 % 10
-    ans = first_digit_1 * last_digit_2
+    while 1:
+        first_digit_1 = int(integer_1/10)
+        last_digit_2 = integer_2 % 10
+        ans = first_digit_1 * last_digit_2
 
-    o_string = number_font.render("O problem: {} * {} = {} ".format(first_digit_1, last_digit_2, ans)
-                                  , True, (255, 0, 0))
+        o_string = number_font.render("O problem: {} * {} = {} ".format(first_digit_1, last_digit_2, ans),
+                                      True, (255, 0, 0))
 
-    return o_string
+        if ans >= 10:
+            print("Now spawning 2 boxes")
+        else:
+            print("Now spawning one box")
+
+        u_input = ans
+
+        correctness = Verification.verification(u_input, ans)
+
+        if correctness:
+            return o_string
 
 
 # I
 def begin_3(integer_1, integer_2):
-    last_digit_1 = integer_1 % 10
-    first_digit_2 = int(integer_2 / 10)
-    ans = last_digit_1 * first_digit_2
+    while 1:
+        last_digit_1 = integer_1 % 10
+        first_digit_2 = int(integer_2 / 10)
+        ans = last_digit_1 * first_digit_2
 
-    i_string = number_font.render("I problem: {} * {} = {} ".format(last_digit_1, first_digit_2, ans)
-                                  , True, (135, 206, 250))
+        i_string = number_font.render("I problem: {} * {} = {} ".format(last_digit_1, first_digit_2, ans),
+                                      True, (135, 206, 250))
 
-    return i_string
+        if ans >= 10:
+            print("Now spawning 2 boxes")
+        else:
+            print("Now spawning one box")
+
+        u_input = ans
+
+        correctness = Verification.verification(u_input, ans)
+
+        if correctness:
+            return i_string
 
 
 # F
 def begin_4(integer_1, integer_2):
-    first_digit_1 = int(integer_1 / 10)
-    first_digit_2 = int(integer_2 / 10)
-    ans = first_digit_1 * first_digit_2
+    while 1:
+        first_digit_1 = int(integer_1 / 10)
+        first_digit_2 = int(integer_2 / 10)
+        ans = first_digit_1 * first_digit_2
 
-    f_string = number_font.render("F problem: {} * {} = {} ".format(first_digit_1, first_digit_2, ans)
-                                  , True, (255, 255, 0))
+        f_string = number_font.render("F problem: {} * {} = {} ".format(first_digit_1, first_digit_2, ans),
+                                      True, (255, 255, 0))
 
-    return f_string
+        if ans >= 10:
+            print("Now spawning 2 boxes")
+        else:
+            print("Now spawning one box")
+
+        u_input = ans
+
+        correctness = Verification.verification(u_input, ans)
+
+        if correctness:
+            return f_string
 
 
-while running:
+while instance == 1:
 
     screen.fill(0)
 
@@ -104,4 +160,4 @@ while running:
 
     for event in pyg.event.get():
         if event.type == pyg.QUIT:
-            running = False
+            instance += 1
