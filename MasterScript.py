@@ -5,13 +5,22 @@ import pygame as pyg
 from random import randint as rin
 import Verification
 from SpinPutBox import *
+import BoxerUnboxer
 
 pyg.init()
 pyg.display.init()
 width = 1280
 height = 695
 screen = pyg.display.set_mode((width, height))
+screen_Rect = screen.get_rect()
 
+input_box1 = InputBox(screen_Rect.centerx - 400, screen_Rect.centery - 310, 140, 32, 0)
+input_box2 = InputBox(screen_Rect.centerx - 375, screen_Rect.centery - 310, 140, 32, 1)
+input_box3 = InputBox(screen_Rect.centerx - 350, screen_Rect.centery - 310, 140, 32, 2)
+input_box4 = InputBox(screen_Rect.centerx - 325, screen_Rect.centery - 310, 140, 32, 3)
+
+input_box5 = InputBox(screen_Rect.centerx - 480, screen_Rect.centery - 290, 140, 32, 2)
+input_box6 = InputBox(screen_Rect.centerx - 505, screen_Rect.centery - 290, 140, 32, 3)
 number_font = pyg.font.Font(None, 24)
 instance = 0
 
@@ -22,6 +31,7 @@ true_ans = r1 * r2
 
 print(r1, "*", r2, "=", true_ans)
 user_input = true_ans
+
 while instance == 0:
     screen.fill(0)
     main_problem_string = "Main problem: {} * {} = ".format(r1, r2)
@@ -34,84 +44,70 @@ while instance == 0:
     screen.blit(render_main_problem, main_problem_Rect)
 
     if true_ans >= 1000:
-        print("Now spawning 4 boxes")
-
-        input_box1 = InputBox(main_problem_Rect.centerx - 450, main_problem_Rect.centery - 360, 140, 32, 0)
-        input_box2 = InputBox(main_problem_Rect.centerx - 425, main_problem_Rect.centery - 360, 140, 32, 1)
-        input_box3 = InputBox(main_problem_Rect.centerx - 400, main_problem_Rect.centery - 360, 140, 32, 2)
-        input_box4 = InputBox(main_problem_Rect.centerx - 375, main_problem_Rect.centery - 360, 140, 32, 3)
         input_boxes = [input_box1, input_box2, input_box3, input_box4]
-        done = False
 
-        while not done:
-            screen.fill(0)
-            main_problem_string = "Main problem: {} * {} = ".format(r1, r2)
+        screen.fill(0)
+        main_problem_string = "Main problem: {} * {} = ".format(r1, r2)
 
-            render_main_problem = number_font.render(main_problem_string, True, (255, 255, 255))
-            main_problem_Rect = screen.get_rect()
-            main_problem_Rect.centerx = main_problem_Rect.centerx + 50
-            main_problem_Rect.centery = main_problem_Rect.centery + 50
+        render_main_problem = number_font.render(main_problem_string, True, (255, 255, 255))
+        main_problem_Rect = screen.get_rect()
+        main_problem_Rect.centerx = main_problem_Rect.centerx + 50
+        main_problem_Rect.centery = main_problem_Rect.centery + 50
 
-            screen.blit(render_main_problem, main_problem_Rect)
+        screen.blit(render_main_problem, main_problem_Rect)
 
+        for box in input_boxes:
+            box.update()
+
+        for box in input_boxes:
+            box.draw(screen)
+
+        pyg.display.flip()
+
+        for event in pyg.event.get():
             for box in input_boxes:
-                box.update()
+                box.handle_event(event)
+                user_input = BoxerUnboxer.final_input
 
-            for box in input_boxes:
-                box.draw(screen)
+                progress = Verification.verification(user_input, true_ans)
 
-            pyg.display.flip()
-
-            for event in pyg.event.get():
-                if event.type == pyg.QUIT:
-                    done = True
-
-                for box in input_boxes:
-                    box.handle_event(event)
+                if not progress:
+                    instance = 0
+                else:
+                    instance = 1
 
     else:
-        print("Now spawning 3 boxes")
+        input_boxes = [input_box2, input_box3, input_box4]
 
-        input_box1 = InputBox(main_problem_Rect.centerx - 450, main_problem_Rect.centery - 360, 140, 32)
-        input_box2 = InputBox(main_problem_Rect.centerx - 425, main_problem_Rect.centery - 360, 140, 32)
-        input_box3 = InputBox(main_problem_Rect.centerx - 400, main_problem_Rect.centery - 360, 140, 32)
-        input_boxes = [input_box1, input_box2, input_box3]
-        done = False
+        main_problem_string = "Main problem: {} * {} = ".format(r1, r2)
 
-        while not done:
-            screen.fill(0)
-            main_problem_string = "Main problem: {} * {} = ".format(r1, r2)
+        render_main_problem = number_font.render(main_problem_string, True, (255, 255, 255))
+        main_problem_Rect = screen.get_rect()
+        main_problem_Rect.centerx = main_problem_Rect.centerx + 50
+        main_problem_Rect.centery = main_problem_Rect.centery + 50
 
-            render_main_problem = number_font.render(main_problem_string, True, (255, 255, 255))
-            main_problem_Rect = screen.get_rect()
-            main_problem_Rect.centerx = main_problem_Rect.centerx + 50
-            main_problem_Rect.centery = main_problem_Rect.centery + 50
+        screen.blit(render_main_problem, main_problem_Rect)
 
-            screen.blit(render_main_problem, main_problem_Rect)
+        for box in input_boxes:
+            box.update()
 
+        for box in input_boxes:
+            box.draw(screen)
+
+        pyg.display.flip()
+
+        for event in pyg.event.get():
             for box in input_boxes:
-                box.update()
+                box.handle_event(event)
 
-            for box in input_boxes:
-                box.draw(screen)
+                user_input = BoxerUnboxer.final_input
 
-            pyg.display.flip()
+                progress = Verification.verification(user_input, true_ans)
 
-            for event in pyg.event.get():
-                if event.type == pyg.QUIT:
-                    done = True
-
-                for box in input_boxes:
-                    box.handle_event(event)
-
-    user_input = true_ans
-
-    progress = Verification.verification(user_input, true_ans)
-
-    if progress:
-        instance = 0
-    else:
-        instance = 1
+                if not progress:
+                    instance = 0
+                else:
+                    instance = 1
 
 
 # Begin the LOIF part of the script
@@ -121,22 +117,11 @@ def begin_l(integer_1, integer_2):
     while 1:
         last_digit_1 = integer_1 % 10
         last_digit_2 = integer_2 % 10
-        ans = last_digit_1 * last_digit_2
 
-        l_string = number_font.render("L problem: {} * {} = {} ".format(last_digit_1, last_digit_2, ans),
+        l_string = number_font.render("L problem: {} * {} = ".format(last_digit_1, last_digit_2),
                                       True, (255, 192, 203))
 
-        if ans >= 10:
-            print("Now spawning 2 boxes")
-        else:
-            print("Now spawning one box")
-
-        u_input = ans
-
-        correctness = Verification.verification(u_input, ans)
-
-        if correctness:
-            return l_string
+        return l_string
 
 
 # O
@@ -149,17 +134,7 @@ def begin_2(integer_1, integer_2):
         o_string = number_font.render("O problem: {} * {} = {} ".format(first_digit_1, last_digit_2, ans),
                                       True, (255, 0, 0))
 
-        if ans >= 10:
-            print("Now spawning 2 boxes")
-        else:
-            print("Now spawning one box")
-
-        u_input = ans
-
-        correctness = Verification.verification(u_input, ans)
-
-        if correctness:
-            return o_string
+        return o_string
 
 
 # I
@@ -172,17 +147,7 @@ def begin_3(integer_1, integer_2):
         i_string = number_font.render("I problem: {} * {} = {} ".format(last_digit_1, first_digit_2, ans),
                                       True, (135, 206, 250))
 
-        if ans >= 10:
-            print("Now spawning 2 boxes")
-        else:
-            print("Now spawning one box")
-
-        u_input = ans
-
-        correctness = Verification.verification(u_input, ans)
-
-        if correctness:
-            return i_string
+        return i_string
 
 
 # F
@@ -195,39 +160,121 @@ def begin_4(integer_1, integer_2):
         f_string = number_font.render("F problem: {} * {} = {} ".format(first_digit_1, first_digit_2, ans),
                                       True, (255, 255, 0))
 
-        if ans >= 10:
-            print("Now spawning 2 boxes")
-        else:
-            print("Now spawning one box")
+        return f_string
 
-        u_input = ans
 
-        correctness = Verification.verification(u_input, ans)
+# L
+def step_1(integer_1, integer_2):
+    while 1:
+        last_digit_1 = integer_1 % 10
+        last_digit_2 = integer_2 % 10
+        ans = last_digit_1 * last_digit_2
 
-        if correctness:
-            return f_string
+        return ans
+
+
+# O
+def step_2(integer_1, integer_2):
+    while 1:
+        first_digit_1 = int(integer_1/10)
+        last_digit_2 = integer_2 % 10
+        ans = first_digit_1 * last_digit_2
+
+        return ans
+
+
+# I
+def step_3(integer_1, integer_2):
+    while 1:
+        last_digit_1 = integer_1 % 10
+        first_digit_2 = int(integer_2 / 10)
+        ans = last_digit_1 * first_digit_2
+
+        return ans
+
+
+# F
+def step_4(integer_1, integer_2):
+    while 1:
+        first_digit_1 = int(integer_1 / 10)
+        first_digit_2 = int(integer_2 / 10)
+        ans = first_digit_1 * first_digit_2
+
+        return ans
 
 
 while instance == 1:
-
     screen.fill(0)
 
-    main_problem_string = "Main problem: {} * {} = {} ".format(r1, r2, true_ans)
+    main_problem_string = "Main problem: {} * {} = ".format(r1, r2)
 
     render_main_problem = number_font.render(main_problem_string, True, (255, 255, 255))
     main_problem_Rect = screen.get_rect()
-    L_problem_Rect = screen.get_rect()
-    L_problem_Rect.centery = screen.get_rect().centery + 24
-    O_problem_Rect = screen.get_rect()
-    O_problem_Rect.centery = screen.get_rect().centery + 48
-    I_problem_Rect = screen.get_rect()
-    I_problem_Rect.centery = screen.get_rect().centery + 72
-    F_problem_Rect = screen.get_rect()
-    F_problem_Rect.centery = screen.get_rect().centery + 96
 
     screen.blit(render_main_problem, main_problem_Rect)
 
+    L_problem_Rect = screen.get_rect()
+    L_problem_Rect.centery = screen.get_rect().centery + 72
+
     screen.blit(begin_l(r1, r2), L_problem_Rect)
+    answer = step_1(r1, r2)
+
+    if answer >= 10:
+        input_boxes = [input_box5, input_box6]
+
+        for box in input_boxes:
+            box.update()
+
+        for box in input_boxes:
+            box.draw(screen)
+
+        pyg.display.flip()
+
+        for event in pyg.event.get():
+            for box in input_boxes:
+                box.handle_event(event)
+                user_input = BoxerUnboxer.final_input
+
+                progress = Verification.verification(user_input, answer)
+
+                if progress:
+                    instance = 0
+                else:
+                    instance = 1
+                    BU.clean_box()
+
+    else:
+        input_boxes = [input_box6]
+
+        for box in input_boxes:
+            box.update()
+
+        for box in input_boxes:
+            box.draw(screen)
+
+        pyg.display.flip()
+
+        for event in pyg.event.get():
+            for box in input_boxes:
+                box.handle_event(event)
+                user_input = BoxerUnboxer.final_input
+
+                progress = Verification.verification(user_input, answer)
+
+                if progress:
+                    instance = 1
+                else:
+                    instance = 2
+
+    O_problem_Rect = screen.get_rect()
+    O_problem_Rect.centery = screen.get_rect().centery + 144
+
+    I_problem_Rect = screen.get_rect()
+    I_problem_Rect.centery = screen.get_rect().centery + 216
+
+    F_problem_Rect = screen.get_rect()
+    F_problem_Rect.centery = screen.get_rect().centery + 288
+
     screen.blit(begin_2(r1, r2), O_problem_Rect)
     screen.blit(begin_3(r1, r2), I_problem_Rect)
     screen.blit(begin_4(r1, r2), F_problem_Rect)

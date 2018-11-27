@@ -17,11 +17,8 @@ def boxer(packaged_integer, box_power):
 
     result = integer * power
 
-    print(result)
-
     global final_input
     final_input += result
-    return final_input
 
 
 def clean_box():
