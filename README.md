@@ -8,3 +8,12 @@ This is the current state of the game for the first output (Nov. 16. 18):
     Added the control structure
     Fixed import syntax
     Created the basic draw scripts
+
+
+This is the end-game, the second to the last sprint made by the programmer (DEC. 5. 2018)
+  Programmer: Added a lot of vistigial scripts like the pure python version
+  Added a script for buttons which is never used
+  Added a new script where all the functions of LOIF are stored independently (Final)
+  BoxerUnboxer now functions as both an interpreter for the boxes and as a place to hold the users input as an array (Final)
+  Verification has been expanded to now calculate the true integer value of the user's input (Final)
+  MasterScript is now skeletally complete (Not Final)
