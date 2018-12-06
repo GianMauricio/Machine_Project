@@ -17,3 +17,11 @@ This is the end-game, the second to the last sprint made by the programmer (DEC.
   BoxerUnboxer now functions as both an interpreter for the boxes and as a place to hold the users input as an array (Final)
   Verification has been expanded to now calculate the true integer value of the user's input (Final)
   MasterScript is now skeletally complete (Not Final)
+
+This is the last sprint, well it's supposed to be (DEC. 6. 2018)
+  Programmer: Integrated Button script (custum made, no source code, used code submitted by Pinky as a soft reference[no copy paste])
+  Added title page to game
+  MainGame script is now ready for integration (Not Final)
+  
+  Artists: Added title screen
+  Added start buttons (Both active state and inactive state)
