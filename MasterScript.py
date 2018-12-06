@@ -1,11 +1,15 @@
 # This will serve as the main game loop for our multiplication operation problems
 
 # Import all needed modules
+import pygame as pyg
 from random import randint as rin
 from SpinPutBox import *
 from LOIF import *
 import BoxerUnboxer
 import Verification
+import os
+import Button
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, 0)
 
 
 # Initialize PyGame and the Screen/Main Surface
@@ -41,6 +45,14 @@ input_box12 = InputBox(screen_Rect.centerx - 455, screen_Rect.centery - 30, 200,
 # Defining the default font for everything
 number_font = pyg.font.Font(None, 24)
 
+# Importing images
+title_screen = pyg.image.load("Resources/Assets/Title_screen.png")
+start_button_active = pyg.image.load("Resources/Assets/Start_Active.png")
+start_button_inactive = pyg.image.load("Resources/Assets/Start_Inactive.png")
+
+title_screen_Rect = screen_Rect
+
+
 # Set origin instance
 instance = 0
 # Create two random numbers
@@ -50,11 +62,34 @@ r1 = rin(10, 99)
 # Calculate the true answer
 true_ans = r1 * r2
 
+
+start_button = Button.Button(title_screen.get_rect().centerx, title_screen.get_rect().centery, 300, 100,
+                             screen, start_button_active, start_button_inactive)
+
+
+def next_instance():
+    print("Forcing instance change")
+    global instance
+    instance = instance + 1
+
+
 # Debug code
 print(r1, "*", r2, "=", true_ans)
-
-# Begin main instance 1 (Original problem)
 while instance == 0:
+    print("Begin game")
+    screen.blit(title_screen, title_screen_Rect)
+
+    for event in pyg.event.get():
+        start_button.handle_event(event)
+
+    start_button.draw_button()
+
+    if start_button.return_value:
+        instance = instance + 1
+
+    pyg.display.flip()
+# Begin main instance 1 (Original problem)
+while instance == 1:
     # Clear the screen
     screen.fill(0)
     # Create string of main problem
@@ -88,7 +123,7 @@ while instance == 0:
         if Verification.verification(Verification.final_value, true_ans):
             BoxerUnboxer.clear_field()
             Verification.reset()
-            instance = 1
+            instance = 2
 
     else:
         input_boxes = [input_box2, input_box3, input_box4]
@@ -116,12 +151,12 @@ while instance == 0:
         if Verification.verification(Verification.final_value, true_ans):
             BoxerUnboxer.clear_field()
             Verification.reset()
-            instance = 1
+            instance = 2
 
     pyg.display.flip()
 
 # Begin the LOIF
-while instance == 1:
+while instance == 2:
     # Clear the screen
     screen.fill(0)
     # Create string of main problem
@@ -163,7 +198,7 @@ while instance == 1:
         if Verification.verification(Verification.final_value, answer):
             BoxerUnboxer.clear_field()
             Verification.reset()
-            instance = 2
+            instance = 3
 
     else:
         input_boxes = [input_box5]
@@ -186,11 +221,11 @@ while instance == 1:
         if Verification.verification(Verification.final_value, answer):
             BoxerUnboxer.clear_field()
             Verification.reset()
-            instance = 2
+            instance = 3
 
     pyg.display.flip()
 
-while instance == 2:
+while instance == 3:
     # Clear the screen
     screen.fill(0)
     # Create string of main problem
@@ -232,7 +267,7 @@ while instance == 2:
         if Verification.verification(Verification.final_value, answer):
             BoxerUnboxer.clear_field()
             Verification.reset()
-            instance = 3
+            instance = 4
 
     else:
         input_boxes = [input_box7]
@@ -255,11 +290,11 @@ while instance == 2:
         if Verification.verification(Verification.final_value, answer):
             BoxerUnboxer.clear_field()
             Verification.reset()
-            instance = 3
+            instance = 4
 
     pyg.display.flip()
 
-while instance == 3:
+while instance == 4:
     # Clear the screen
     screen.fill(0)
     # Create string of main problem
@@ -301,7 +336,7 @@ while instance == 3:
         if Verification.verification(Verification.final_value, answer):
             BoxerUnboxer.clear_field()
             Verification.reset()
-            instance = 4
+            instance = 5
 
     else:
         input_boxes = [input_box9]
@@ -324,11 +359,11 @@ while instance == 3:
         if Verification.verification(Verification.final_value, answer):
             BoxerUnboxer.clear_field()
             Verification.reset()
-            instance = 4
+            instance = 5
 
     pyg.display.flip()
 
-while instance == 4:
+while instance == 5:
     # Clear the screen
     screen.fill(0)
     # Create string of main problem
@@ -370,7 +405,7 @@ while instance == 4:
         if Verification.verification(Verification.final_value, answer):
             BoxerUnboxer.clear_field()
             Verification.reset()
-            instance = 5
+            instance = 6
 
     else:
         input_boxes = [input_box11]
@@ -393,6 +428,6 @@ while instance == 4:
         if Verification.verification(Verification.final_value, answer):
             BoxerUnboxer.clear_field()
             Verification.reset()
-            instance = 5
+            instance = 6
 
     pyg.display.flip()
